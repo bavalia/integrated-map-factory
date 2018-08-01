@@ -32,9 +32,8 @@ for i, pt in enumerate(gps):
     bot = max(0, i-2)
     direction = np.arctan2(*(gps[top]-gps[bot]))
     img = mapRot(pt, direction, 50, 20, 25)
+
     # img = fitScreen(img)
-    # gpsMarks(img, pt)
-    # gpsPath(img, gps)
     print("done till ", i, " out of ", len(gps))
     cv2.imshow("img", img)
     cv2.waitKey(1)

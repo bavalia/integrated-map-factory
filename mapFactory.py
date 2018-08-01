@@ -51,23 +51,38 @@ def maps(mapRange, obj=None, winSize=None, maptype='roadmap'):
     return npMap.npMap(obj, mapRange)
 
 def mapRot(center, directionPi, frontMeter, backMeter, sideMeter, maptype='roadmap'):
+    # This returns a numpy array not npMap array, which can not be further used to process as map
+
     rotAngle = np.pi/2 - directionPi
     deltaMax = np.sqrt(max(frontMeter, backMeter)**2 + sideMeter**2)
     deltaLat = deltaMax * npMap.C_dist2lat
     deltaLon = deltaMax * npMap.C_dist2lon(center[0])
     img = maps((center[0]-deltaLat, center[0]+deltaLat, \
                 center[1]-deltaLon, center[1]+deltaLon), maptype=maptype)
-    gpsMarks(img, center)
+    # gpsMarks(img, center)
     centRow = img.lat2row(center[0])
     centCol = img.lon2col(center[1])
     M = cv2.getRotationMatrix2D((centCol, centRow), rotAngle/np.pi*180, 1)
     imgRot = cv2.warpAffine(img, M, (img.shape[1], img.shape[0]))
+
     xScale = np.sqrt((img.C_dist2col*np.cos(rotAngle))**2 + \
                      (img.C_dist2row*np.sin(rotAngle))**2)
     yScale = np.sqrt((img.C_dist2row*np.cos(rotAngle))**2 + \
                      (img.C_dist2col*np.sin(rotAngle))**2)
+    
     # print (img.C_dist2row, img.C_dist2col)
     # print (yScale, xScale)
+    # print(centRow, centCol)
+
+    # Add Rectangle as car in the image
+    width = 1.8
+    length = 4.4
+    xhalf =  int(np.rint(xScale*width/2))
+    yhalf =  int(np.rint(yScale*length/2))
+    cv2.rectangle(imgRot, (centCol-xhalf, centRow-yhalf), \
+                            (centCol+xhalf, centRow+yhalf), (255,0,255), -1)
+
+    # Crop to required size
     xpix = int(np.rint(sideMeter*xScale))
     return imgRot[centRow-int(np.rint(frontMeter*yScale)) : \
                     centRow+int(np.rint(backMeter*yScale))  , \
