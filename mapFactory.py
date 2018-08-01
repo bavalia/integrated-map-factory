@@ -52,6 +52,7 @@ def maps(mapRange, obj=None, winSize=None, maptype='roadmap'):
 
 def mapRot(center, directionPi, frontMeter, backMeter, sideMeter, maptype='roadmap'):
     # This returns a numpy array not npMap array, which can not be further used to process as map
+    # Todo: add option to pass pre-generated map
 
     rotAngle = np.pi/2 - directionPi
     deltaMax = np.sqrt(max(frontMeter, backMeter)**2 + sideMeter**2)
