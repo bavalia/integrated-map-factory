@@ -9,8 +9,8 @@ A full map solution for localization in self-driving cars with integrated coordi
     * latitude-hight(m)-rows(pixel) / longitude-width(m)-columns(pixel) conversion formulas as npMap attributes
   * [mapDownloader](mapDownloader.py) to download patch of maps from google maps api
     * google API key can be integrated for heavy usage
-    * type of maps satellite, mapsOnly, hybrid can be selected
-    * zoom level of map can be selected, default zoom is 20 with maximum details-
+    * type of maps: satellite, roadmap, hybrid 
+    * zoom level of map, default zoom is 20 with maximum details
   * [mapGenerator](mapGenerator.py) to stitch patches of maps and prepare the map with given coordinate integration
     * integrates mapDownloader and npMap to generate maps 
     * integrates attibutes to given npMap and sets constants for conversion formula for the map
@@ -22,10 +22,24 @@ A full map solution for localization in self-driving cars with integrated coordi
     * gpsUnique(gps_data) #to filter out multiple continuous same entry
   * [mapFactory](mapFactory.py) to generate and manupulate maps
     * maps(maprange, obj=None, winSize=None, maptype='roadmap') #function to generate map with given range
-    * maprange = (latmin,latmax,lonmin,lonmax) # always need to be defined
-    * obj : any npMap or image need to be converted to map with given coordinate range    
-    * winSize = (rows,cols) # output image size
-    * maptype : roadmap/satellite/hybrid
+      * maprange = (latmin,latmax,lonmin,lonmax) # always need to be defined
+      * obj : any npMap or image need to be converted to map with given coordinate range    
+      * winSize = (rows,cols) # output image size
+      * maptype : roadmap/satellite/hybrid
+    * testGpsTrace() : A function to trace out gps track/trail on map
   * [movingCarWindow](movingCarWindow.py) to show a realtime map with localization like navigation
     * just needs GPS stream of data and orientation for realtime map navigation
   
+
+## Samples
+
+* Hybrid map stitched
+* ![Alt text](hybrid.png?raw=true)
+* RoadMap stitched and cleaned
+* ![Alt text](roadmap.png?raw=true)
+* GPS trail on Map
+* ![Alt text](gpsTrail.png?raw=true)
+* Navigation and Localization
+* ![Alt text](navigation.png?raw=true)
+
+
