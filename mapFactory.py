@@ -130,9 +130,9 @@ def fitScreen(obj):
 
 def testGpsTrace():
     delta = 0.0001
-    gps = gpsUnique(gpsLoad("society2018apr.txt"))
-    # gps = gpsUnique(gpsLoad("society.txt"))
-    # gps = gpxLoad("gpxTest.gpx")
+    gps = gpsUnique(gpsLoad("gpsLoc/societyShort.txt"))
+    # gps = gpsUnique(gpsLoad("gpsLoc/society.txt"))
+    # gps = gpxLoad("gpsLoc/gpxTest.gpx")
     xmin = np.min(gps[:,1])-delta
     xmax = np.max(gps[:,1])+delta
     ymin = np.min(gps[:,0])-delta
@@ -153,8 +153,8 @@ def testGpsTraceSWT():
     map1 = fitScreen(map1)
     # map1 = maps((23.192695-deltav, 23.198698+deltav, 77.511206-deltah, 77.512173+deltah), None, None, "hybrid")
     map1 = fitScreen(map1)
-    # gps = gpsUnique(gpsLoad("society.txt"))
-    gps = gpsUnique(gpsLoad("society2018apr.txt"))
+    # gps = gpsUnique(gpsLoad("gpsLoc/society.txt"))
+    gps = gpsUnique(gpsLoad("gpsLoc/society2018apr.txt"))
     # # map1.gpsMarks(gps)
     gpsPath(map1, gps, (255,0,0))
     gpsMarks(map1, gps[0], (0,255,0), 5)

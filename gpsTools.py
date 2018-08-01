@@ -58,7 +58,7 @@ def gpsUnique(coordinates):
 
 
 def main():
-    # array = gpsLoad("society.txt")
+    # array = gpsLoad("gpsLoc/society.txt")
     array = gpsLoad("gpsLoc/17/17_10_2017_0.txt")
     uniq = gpsUnique(array)
     print (array.shape, uniq.shape)

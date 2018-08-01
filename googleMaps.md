@@ -1,8 +1,7 @@
 # Google Maps API Guide
 
 * Earth Radius (R)    # 6371.3 Km           # 6371.3 [6349-6378]  km
-* angle in 1 Km at equator (1/R*180/pi)   # approx = 0.0090 deg
-*                     # 0.008993 deg = 0.000156954 rad
+* angle in 1 Km at equator (1/R*180/pi)   # approx = 0.0090 deg   # 0.008993 deg = 0.000156954 rad
 * distance in 1 degree at equator         # 111.19492664455875 Km
 
 * 0.0005 deg      = 55.6 m

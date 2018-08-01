@@ -11,12 +11,12 @@ mapType = 'roadmap'
 # size = (90,160)
 size = None
 
-# gps = gpsUnique(gpsLoad("society.txt"))
-gps = gpsUnique(gpsLoad("society2018apr.txt"))
-# gps = gpsUnique(gpsLoggerLoad("gpsTest.txt"))
-# gps = gpsUnique(gpsLoad("u_turn.txt"))
+# gps = gpsUnique(gpsLoad("gpsLoc/society.txt"))
+gps = gpsUnique(gpsLoad("gpsLoc/societyShort.txt"))
+# gps = gpsUnique(gpsLoggerLoad("gpsLoc/gpsLogger.log"))
+# gps = gpsUnique(gpsLoad("gpsLoc/u_turn.txt"))
 # gps = gpsUnique(gpsLoad("../gps_world/gps_road/25_4_2017r.txt"))
-# gps = gpsUnique(gpxLoad('gpxTest.gpx'))
+# gps = gpsUnique(gpxLoad('gpsLoc/gpxTest.gpx'))
 
 
 t = time()
