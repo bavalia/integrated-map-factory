@@ -34,12 +34,12 @@ A full map solution for localization in self-driving cars with integrated coordi
 ## Samples
 
 * Hybrid map stitched
-* ![Alt text](hybrid.png?raw=true)
+* ![Alt text](images/hybrid.png?raw=true)
 * RoadMap stitched and cleaned
-* ![Alt text](roadmap.png?raw=true)
+* ![Alt text](images/roadmap.png?raw=true)
 * GPS trail on Map
-* ![Alt text](gpsTrail.png?raw=true)
+* ![Alt text](images/gpsTrail.png?raw=true)
 * Navigation and Localization
-* ![Alt text](navigation.png?raw=true)
+* ![Alt text](images/navigation.png?raw=true)
 
 
