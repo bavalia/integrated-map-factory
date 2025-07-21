@@ -30,7 +30,7 @@ import os
 
 class googleMapDownloader:
 
-    def __init__(self, zoom=16, sizeWidth=640, sizeHeight=640, maptype='roadmap', labels=False, scale=1, otherDefault=None, key=None):
+    def __init__(self, zoom=16, sizeWidth=640, sizeHeight=640, maptype='roadmap', labels=False, scale=1, otherDefault=None, key=key):
         self._zoom            = zoom
         self._size            = str(sizeWidth) + "x" + str(sizeHeight)
         self._maptype         = maptype
@@ -79,7 +79,7 @@ class googleMapDownloader:
 
 if __name__ == '__main__':
 
-    gmd = googleMapDownloader(zoom, imgSizeWidth, imgSizeHeight, maptype)
+    gmd = googleMapDownloader(zoom, imgSizeWidth, imgSizeHeight, maptype, key=key)
 
     imgFolder = imgBaseFolder + \
                 str(gmd._zoom) + "/" + \

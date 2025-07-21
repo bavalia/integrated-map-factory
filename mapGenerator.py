@@ -16,49 +16,10 @@ import numpy as np
 import cv2
 from mapDownloader import swaayattMapDownloader as SMD
 
-### Default Parametes ###
-
-C_delta               = 0.0005
-zoom                = 20
-# zoom                = 18
-
-# maptype             = 'satellite'
-maptype             = 'roadmap'
-# maptype             = 'hybrid'
-
-# # Center
-# delt = 0.0005
-# Lat , Lon = 23.234, 77.49
-# latMin  = Lat - delt
-# latMax = Lat + delt
-# lonMin = Lon - delt
-# lonMax = Lon + delt
-
-# latMin              = 23.233815
-# latMax              = 23.23552833
-# lonMin              = 77.48972833
-# lonMax              = 77.492635
-
-# #society (23.233815, 23.23552833, 77.48972833, 77.492635)
-# latMin              = 23.233815
-# latMax              = 23.23552833
-# lonMin              = 77.48972833
-# lonMax              = 77.492635
-
-#road - u_turn (23.192695, 23.198698, 77.511206, 77.512173)
-latMin              = 23.192695
-latMax              = 23.198698
-lonMin              = 77.511206
-lonMax              = 77.512173
-
-# #road - full 
-# latMin              = 23.1478733
-# latMax              = 23.23713
-# lonMin              = 77.4945366
-# lonMax              = 77.515238
 
 ### Constants ###
 precision           = 5
+C_delta             = 0.0005
 swytHeightConst     = 556               #pixels
 tensFactor          = 10**precision
 #TODO what if image size is different than p556
@@ -66,16 +27,16 @@ imgBaseFolder       = "./mapSwaayatt/"
 
 
 
-def mapGenerator(latMin, latMax, lonMin, lonMax, maptype='roadmap', zoom=20, delta=None):
+def mapGenerator(latMin, latMax, lonMin, lonMax, maptype='roadmap', zoom=20, delta=None, labels=False):
 
-    delta = 2**(20-zoom) * C_delta
+    if not delta : delta = 2**(20-zoom) * C_delta
     if maptype not in ["roadmap", "satellite", "hybrid"] :
         maptype = "roadmap"
     imgFolder = imgBaseFolder + \
                 "l" + str(int(delta *tensFactor)) +"p556/" + \
                 maptype + "/"
 
-    smd = SMD(maptype, delta, zoom)
+    smd = SMD(maptype, delta, zoom, labels=labels)
 
     _delta = int(delta * tensFactor)
     _latMin    = int(np.rint(latMin * tensFactor /_delta)) *_delta
@@ -105,6 +66,7 @@ def mapGenerator(latMin, latMax, lonMin, lonMax, maptype='roadmap', zoom=20, del
                 print ("ERROR: img is none", imgFolder + imgTitle)
             # cv2.imshow("img", img)
             # cv2.waitKey(0)
+            #print("img.shape:",img.shape)
 
             if hstack is not None:
                 hstack = np.hstack([hstack, img])
@@ -112,6 +74,10 @@ def mapGenerator(latMin, latMax, lonMin, lonMax, maptype='roadmap', zoom=20, del
                 hstack = img
 
         if vstack is not None:
+            vstackWidth = vstack.shape[1]
+            hstackWidth = hstack.shape[1]
+            if vstackWidth != hstackWidth : 
+                hstack = cv2.resize(hstack, (vstackWidth,hstack.shape[0]))
             vstack = np.vstack([hstack, vstack])
         else :
             vstack = hstack
@@ -132,19 +98,33 @@ def mapGenerator(latMin, latMax, lonMin, lonMax, maptype='roadmap', zoom=20, del
 
 
 if __name__ == '__main__':
+    ### Default Parametes ###
+    zoom                = 18  # 20
+    maptype             = 'hybrid'  # 'roadmap' 'satellite' 'hybrid' 
+    labels              = True
 
-    vstack = mapGenerator(latMin, latMax, lonMin, lonMax, maptype, zoom)
+    # S.P. Road Eden Garden
+    latMin              = 22.787 #22.787
+    latMax              = 22.79 #22.79
+    lonMin              = 70.829 #70.829
+    lonMax              = 70.833 #70.833
+
+    vstack = mapGenerator(latMin, latMax, lonMin, lonMax, maptype, zoom, labels=labels)
 
     print(vstack.shape)
     y,x = vstack.shape[0:2]
     ymax, xmax = 700, 1300
     factor = np.max([y/ymax, x/xmax])
-    y,x = int(y/factor), int(x/factor)
-    imgUnion = cv2.resize(vstack, (x,y))
+
+    if factor > 1 : 
+        y,x = int(y/factor), int(x/factor)
+        imgUnion = cv2.resize(vstack, (x,y))
+    else : 
+        imgUnion = vstack
     print(imgUnion.shape)
 
 
     key = None
-    while key is not 27 :
+    while key != 27 :
       cv2.imshow("imgUnion", imgUnion)
       key = cv2.waitKey(0)

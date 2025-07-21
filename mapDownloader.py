@@ -68,7 +68,7 @@ swaayattBaseFolder  = "./mapSwaayatt/"
 
 class googleMapDownloader:
     #TODO Class name should start with capital
-    def __init__(self, zoom=16, sizeWidth=640, sizeHeight=640, maptype='roadmap', labels=False, scale=1, otherDefault=None, key=None):
+    def __init__(self, zoom=16, sizeWidth=640, sizeHeight=640, maptype='roadmap', labels=False, scale=1, otherDefault=None, key=key):
         self._zoom            = zoom
         self._size            = str(sizeWidth) + "x" + str(sizeHeight)
         self._maptype         = maptype
@@ -117,7 +117,7 @@ class googleMapDownloader:
 class swaayattMapDownloader(googleMapDownloader):
 
     def __init__(self, maptype='roadmap', delta=0.0005, zoom=20,  \
-                 other=None, key=None, precision=5):
+                 other=None, key=key, precision=5, labels=False):
         self._precision       = precision
         self._tens            = 10**precision
         self._delta           = int(delta * self._tens)
@@ -127,7 +127,6 @@ class swaayattMapDownloader(googleMapDownloader):
         self._googleMaxSize   = 640
 
         scale            = 2       # googleImage clearity
-        labels           = False
         portionOfImage   = int(2**(20-zoom) * 0.0005/delta)
         self._outHeight  = int(np.rint(self._swytHeightConst / portionOfImage))
         self._googleWidth= int(np.rint(self._googleWidthConst * scale / portionOfImage))
@@ -197,6 +196,6 @@ class swaayattMapDownloader(googleMapDownloader):
 
 if __name__ == '__main__':
 
-    smd = swaayattMapDownloader(maptype)
+    smd = swaayattMapDownloader(maptype, labels=True)
 
     smd.getSwaayattMapRange(latMin, latMax, lonMin, lonMax)
